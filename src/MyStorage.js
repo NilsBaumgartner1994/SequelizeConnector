@@ -92,6 +92,11 @@ export class MyStorage{
         await MyStorage.removeRememberMe();
         await MyStorage.removeAuthMethod();
         await MyStorage.removeCurrentUser();
+        try{
+            await MyStorage.getStorageImplementation().clear();
+        } catch (err){
+            console.log(err);
+        }
     }
 
 }

@@ -81,6 +81,10 @@ export class StorageDict{
         return true;
     }
 
+    static async clear(){
+        StorageDict.data = {};
+    }
+
 }
 
 export default StorageDict;
