@@ -1,6 +1,6 @@
 {
   "name": "sequelizeconnector",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Connector to Sequelize API Server",
   "main": "dist/index.js",
   "scripts": {
