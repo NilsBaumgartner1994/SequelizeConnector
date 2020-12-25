@@ -1,6 +1,7 @@
 import {RequestHelper} from "./RequestHelper";
 import {MyStorage} from "./MyStorage";
 import {APIRequest} from "./APIRequest";
+import SequelizeConnector from "./SequelizeConnector";
 
 export class AuthConnector {
 
@@ -52,7 +53,7 @@ export class AuthConnector {
             await MyStorage.saveAccessToken(accessToken);
             await MyStorage.saveRefreshToken(refreshToken);
         } else {
-            AuthConnector.resetAuthStorage();
+            await MyStorage.clear();
         }
         return answer;
     }
@@ -74,7 +75,7 @@ export class AuthConnector {
         let refreshToken = MyStorage.getRefreshToken();
         let answer = await RequestHelper.sendRequest(RequestHelper.REQUEST_TYPE_POST,"auth/logout", {refreshToken: refreshToken});
         await MyStorage.clear();
-        await APIRequest.handleLogout();
+        await SequelizeConnector.handleLogout();
         return answer;
     }
 
@@ -82,7 +83,7 @@ export class AuthConnector {
         let answer = await RequestHelper.sendRequest(RequestHelper.REQUEST_TYPE_POST,"auth/logoutFromAllDevices", {auth: authObject});
         if(RequestHelper.isSuccess(answer)){
             await MyStorage.clear();
-            await APIRequest.handleLogout();
+            await SequelizeConnector.handleLogout();
             return answer.data;
         }
         return null;

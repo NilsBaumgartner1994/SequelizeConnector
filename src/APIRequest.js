@@ -1,5 +1,6 @@
 import {AuthConnector} from "./AuthConnector";
 import {RequestHelper} from "./RequestHelper";
+import SequelizeConnector from "./SequelizeConnector";
 
 export class APIRequest {
 
@@ -16,7 +17,7 @@ export class APIRequest {
                 } else if(!!refreshAnswer && !!refreshAnswer.error) {
                     error = refreshAnswer.error;
                     if(error.message === "RefreshTokenInvalid" || error.message === "RefreshTokenMissing"){
-                        await APIRequest.handleLogout();
+                        await SequelizeConnector.handleLogout();
                     }
                 }
             } else { //let the other handle the error
